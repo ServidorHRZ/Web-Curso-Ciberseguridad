@@ -1,0 +1,84 @@
+{
+    "semanas": [
+        {
+            "numero": 1,
+            "materiales": [
+                {
+                    "dia": "Lunes",
+                    "titulo": "Material Clase 1",
+                    "link": "https://drive.google.com/drive/folders/ejemplo1"
+                },
+                {
+                    "dia": "Miércoles",
+                    "titulo": "Material Clase 2",
+                    "link": "https://drive.google.com/drive/folders/ejemplo2"
+                },
+                {
+                    "dia": "Viernes",
+                    "titulo": "Material Clase 3",
+                    "link": "https://drive.google.com/drive/folders/ejemplo3"
+                }
+            ]
+        },
+        {
+            "numero": 2,
+            "materiales": [
+                {
+                    "dia": "Lunes",
+                    "titulo": "Material Clase 4",
+                    "link": "https://drive.google.com/drive/folders/ejemplo4"
+                },
+                {
+                    "dia": "Miércoles",
+                    "titulo": "Material Clase 5",
+                    "link": "https://drive.google.com/drive/folders/ejemplo5"
+                },
+                {
+                    "dia": "Viernes",
+                    "titulo": "Material Clase 6",
+                    "link": "https://drive.google.com/drive/folders/ejemplo6"
+                }
+            ]
+        },
+        {
+            "numero": 3,
+            "materiales": [
+                {
+                    "dia": "Lunes",
+                    "titulo": "Material Clase 7",
+                    "link": "https://drive.google.com/drive/folders/ejemplo7"
+                },
+                {
+                    "dia": "Miércoles",
+                    "titulo": "Material Clase 8",
+                    "link": "https://drive.google.com/drive/folders/ejemplo8"
+                },
+                {
+                    "dia": "Viernes",
+                    "titulo": "Material Clase 9",
+                    "link": "https://drive.google.com/drive/folders/ejemplo9"
+                }
+            ]
+        },
+        {
+            "numero": 4,
+            "materiales": [
+                {
+                    "dia": "Lunes",
+                    "titulo": "Material Clase 10",
+                    "link": "https://drive.google.com/drive/folders/ejemplo10"
+                },
+                {
+                    "dia": "Miércoles",
+                    "titulo": "Material Clase 11",
+                    "link": "https://drive.google.com/drive/folders/ejemplo11"
+                },
+                {
+                    "dia": "Viernes",
+                    "titulo": "Material Clase 12",
+                    "link": "https://drive.google.com/drive/folders/ejemplo12"
+                }
+            ]
+        }
+    ]
+} 

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Variable para controlar si ya hay una alerta visible
+        let alertaVisible = false;
+
+        // Deshabilitar clic derecho
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            mostrarAlertaSeguridad('El clic derecho no está permitido en esta aplicación.');
+        });
+
+        // Deshabilitar F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) ||
+                (e.ctrlKey && (e.key === 'U' || e.key === 'u'))
+            ) {
+                e.preventDefault();
+                mostrarAlertaSeguridad('Las herramientas de desarrollo no están permitidas en esta aplicación.');
+            }
+        });
+
+        // Deshabilitar Ctrl+P
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) {
+                e.preventDefault();
+                mostrarAlertaSeguridad('La impresión no está permitida en esta aplicación.');
+            }
+        });
+
+        function mostrarAlertaSeguridad(mensaje) {
+            // Si ya hay una alerta visible, no crear otra
+            if (alertaVisible) return;
+            
+            alertaVisible = true;
+
+            const alerta = document.createElement('div');
+            alerta.id = 'alertaSeguridad';
+            alerta.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.95);
+                color: #ff0000;
+                padding: 20px;
+                border: 2px solid #ff0000;
+                border-radius: 10px;
+                font-family: 'Share Tech Mono', monospace;
+                z-index: 10000;
+                text-align: center;
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+                animation: aparecer 0.3s ease;
+            `;
+
+            const mensajeTexto = document.createElement('p');
+            mensajeTexto.textContent = mensaje;
+            mensajeTexto.style.margin = '0 0 15px 0';
+
+            const botonCerrar = document.createElement('button');
+            botonCerrar.textContent = 'Entendido';
+            botonCerrar.style.cssText = `
+                background: transparent;
+                border: 1px solid #ff0000;
+                color: #ff0000;
+                padding: 8px 16px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-family: 'Share Tech Mono', monospace;
+                transition: all 0.3s ease;
+            `;
+
+            botonCerrar.onmouseover = () => {
+                botonCerrar.style.background = '#ff0000';
+                botonCerrar.style.color = '#000';
+            };
+
+            botonCerrar.onmouseout = () => {
+                botonCerrar.style.background = 'transparent';
+                botonCerrar.style.color = '#ff0000';
+            };
+
+            const overlay = document.createElement('div');
+            overlay.id = 'overlaySeguridad';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 9999;
+            `;
+
+            botonCerrar.onclick = () => {
+                document.body.removeChild(alerta);
+                document.body.removeChild(overlay);
+                alertaVisible = false;
+            };
+
+            alerta.appendChild(mensajeTexto);
+            alerta.appendChild(botonCerrar);
+            document.body.appendChild(overlay);
+            document.body.appendChild(alerta);
+
+            // Mensaje de voz (solo si no hay otro mensaje reproduciéndose)
+            if (!window.speechSynthesis.speaking) {
+                const mensajeVoz = new SpeechSynthesisUtterance();
+                mensajeVoz.text = mensaje;
+                mensajeVoz.lang = 'es-ES';
+                window.speechSynthesis.speak(mensajeVoz);
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        body {
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(26, 0, 0, 0.5)),
+                        url('../imagenes/img2.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ff0000;
+            min-height: 100vh;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .cabecera {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            border-bottom: 2px solid #ff0000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .semanas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .semana {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ff0000;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .semana:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .semana-titulo {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ff0000;
+        }
+
+        .grabacion {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #ff0000;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .grabacion:hover {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        .grabacion-titulo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .grabacion-dia {
+            font-size: 0.9rem;
+            color: #ff6666;
+        }
+
+        .grabacion-acciones {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .grabacion-enlace, .material-enlace {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ff0000;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ff0000;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .material-enlace {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        .grabacion-enlace:hover, .material-enlace:hover {
+            background: #ff0000;
+            color: #000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container {
+            width: 80%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+        }
+
+        .cerrar-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #ff0000;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .cerrar-sesion {
+            background: transparent;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .cerrar-sesion:hover {
+            background: #ff0000;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .usuario-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .usuario-nombre {
+            color: #ff0000;
+            font-size: 1.1rem;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .contenedor {
+                padding: 1rem;
+            }
+
+            .semanas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-container {
+                width: 95%;
+            }
+        }
+
+        .alerta-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 2rem;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .alerta-mensaje {
+            color: #ff0000;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+        }
+
+        .alerta-botones {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .alerta-boton {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #ff0000;
+            background: transparent;
+            color: #ff0000;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .alerta-boton:hover {
+            background: #ff0000;
+            color: #000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="cabecera">
+        <h1 class="titulo-bienvenida">Panel de Control</h1>
+        <div class="usuario-info">
+            <span class="usuario-nombre" id="nombreUsuario">Usuario</span>
+            <button class="cerrar-sesion" onclick="cerrarSesion()">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </div>
+    </header>
+
+    <div class="contenedor">
+        <div class="semanas-grid" id="semanasContainer">
+            <!-- El contenido se cargará dinámicamente -->
+        </div>
+    </div>
+
+    <div class="video-modal" id="videoModal">
+        <div class="cerrar-modal" onclick="cerrarVideo()">×</div>
+        <div class="video-container" id="videoContainer"></div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="alerta-modal" id="alertaModal">
+        <div class="alerta-mensaje">
+            El material está disponible exclusivamente para ti con el correo registrado: 
+            <strong id="usuarioCorreo"></strong>
+        </div>
+        <div class="alerta-botones">
+            <button class="alerta-boton" onclick="confirmarAcceso()">Continuar</button>
+            <button class="alerta-boton" onclick="cancelarAcceso()">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        let linkMaterialActual = '';
+
+        function abrirMaterial(link, usuario) {
+            linkMaterialActual = link;
+            document.getElementById('usuarioCorreo').textContent = usuario;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('alertaModal').style.display = 'block';
+
+            // Mensaje de voz
+            const mensajeVoz = new SpeechSynthesisUtterance();
+            mensajeVoz.text = `El material está disponible exclusivamente para ti con el correo registrado: ${usuario}`;
+            mensajeVoz.lang = 'es-ES';
+            window.speechSynthesis.speak(mensajeVoz);
+        }
+
+        function confirmarAcceso() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('alertaModal').style.display = 'none';
+            window.open(linkMaterialActual, '_blank');
+        }
+
+        function cancelarAcceso() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('alertaModal').style.display = 'none';
+            linkMaterialActual = '';
+        }
+
+        async function cargarGrabaciones() {
+            try {
+                const [grabacionesResponse, materialesResponse] = await Promise.all([
+                    fetch('../data/grabaciones.json'),
+                    fetch('../data/materiales.json')
+                ]);
+                
+                const grabaciones = await grabacionesResponse.json();
+                const materiales = await materialesResponse.json();
+                const container = document.getElementById('semanasContainer');
+                const usuario = document.getElementById('nombreUsuario').textContent;
+
+                grabaciones.semanas.forEach((semana, index) => {
+                    const semanaElement = document.createElement('div');
+                    semanaElement.className = 'semana';
+                    semanaElement.innerHTML = `
+                        <h2 class="semana-titulo">Semana ${semana.numero}</h2>
+                        ${semana.grabaciones.map((grab, i) => `
+                            <div class="grabacion">
+                                <div class="grabacion-titulo">
+                                    <span>${grab.titulo}</span>
+                                    <span class="grabacion-dia">${grab.dia}</span>
+                                </div>
+                                <div class="grabacion-acciones">
+                                    <a href="#" class="grabacion-enlace" onclick="abrirVideo('${grab.link}')">
+                                        <i class="fas fa-play"></i> Ver Grabación
+                                    </a>
+                                    <a href="#" 
+                                       class="material-enlace" 
+                                       onclick="abrirMaterial('${materiales.semanas[index].materiales[i].link}', '${usuario}')">
+                                        <i class="fas fa-book"></i> Material
+                                    </a>
+                                </div>
+                            </div>
+                        `).join('')}
+                    `;
+                    container.appendChild(semanaElement);
+                });
+            } catch (error) {
+                console.error('Error al cargar los datos:', error);
+            }
+        }
+
+        function abrirVideo(link) {
+            const modal = document.getElementById('videoModal');
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = `<iframe src="${link}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`;
+            modal.style.display = 'flex';
+        }
+
+        function cerrarVideo() {
+            const modal = document.getElementById('videoModal');
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = '';
+            modal.style.display = 'none';
+        }
+
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const usuario = params.get('usuario');
+            if (usuario) {
+                document.getElementById('nombreUsuario').textContent = usuario;
+                
+                const mensajeVoz = new SpeechSynthesisUtterance();
+                mensajeVoz.text = `Bienvenido al panel de control, acontinuacion podras encontrar las grabaciones del curso y material de estudio.`;
+                mensajeVoz.lang = 'es-ES';
+                mensajeVoz.volume = 1;
+                mensajeVoz.pitch = 1;
+                mensajeVoz.rate = 0.9;
+                
+                window.speechSynthesis.speak(mensajeVoz);
+            }
+            cargarGrabaciones();
+        }
+
+        function cerrarSesion() {
+            const mensajeVoz = new SpeechSynthesisUtterance();
+            mensajeVoz.text = "Cerrando sesión. Hasta pronto.";
+            mensajeVoz.lang = 'es-ES';
+            window.speechSynthesis.speak(mensajeVoz);
+            
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

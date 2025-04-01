@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Hacker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Variable para controlar si ya hay una alerta visible
+        let alertaVisible = false;
+
+        // Deshabilitar clic derecho
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            mostrarAlertaSeguridad('El clic derecho no está permitido en esta aplicación.');
+        });
+
+        // Deshabilitar F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) ||
+                (e.ctrlKey && (e.key === 'U' || e.key === 'u'))
+            ) {
+                e.preventDefault();
+                mostrarAlertaSeguridad('Las herramientas de desarrollo no están permitidas en esta aplicación.');
+            }
+        });
+
+        // Deshabilitar Ctrl+P
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) {
+                e.preventDefault();
+                mostrarAlertaSeguridad('La impresión no está permitida en esta aplicación.');
+            }
+        });
+
+        function mostrarAlertaSeguridad(mensaje) {
+            // Si ya hay una alerta visible, no crear otra
+            if (alertaVisible) return;
+            
+            alertaVisible = true;
+
+            const alerta = document.createElement('div');
+            alerta.id = 'alertaSeguridad';
+            alerta.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.95);
+                color: #ff0000;
+                padding: 20px;
+                border: 2px solid #ff0000;
+                border-radius: 10px;
+                font-family: 'Share Tech Mono', monospace;
+                z-index: 10000;
+                text-align: center;
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+                animation: aparecer 0.3s ease;
+            `;
+
+            const mensajeTexto = document.createElement('p');
+            mensajeTexto.textContent = mensaje;
+            mensajeTexto.style.margin = '0 0 15px 0';
+
+            const botonCerrar = document.createElement('button');
+            botonCerrar.textContent = 'Entendido';
+            botonCerrar.style.cssText = `
+                background: transparent;
+                border: 1px solid #ff0000;
+                color: #ff0000;
+                padding: 8px 16px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-family: 'Share Tech Mono', monospace;
+                transition: all 0.3s ease;
+            `;
+
+            botonCerrar.onmouseover = () => {
+                botonCerrar.style.background = '#ff0000';
+                botonCerrar.style.color = '#000';
+            };
+
+            botonCerrar.onmouseout = () => {
+                botonCerrar.style.background = 'transparent';
+                botonCerrar.style.color = '#ff0000';
+            };
+
+            const overlay = document.createElement('div');
+            overlay.id = 'overlaySeguridad';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 9999;
+            `;
+
+            botonCerrar.onclick = () => {
+                document.body.removeChild(alerta);
+                document.body.removeChild(overlay);
+                alertaVisible = false;
+            };
+
+            alerta.appendChild(mensajeTexto);
+            alerta.appendChild(botonCerrar);
+            document.body.appendChild(overlay);
+            document.body.appendChild(alerta);
+
+            // Mensaje de voz (solo si no hay otro mensaje reproduciéndose)
+            if (!window.speechSynthesis.speaking) {
+                const mensajeVoz = new SpeechSynthesisUtterance();
+                mensajeVoz.text = mensaje;
+                mensajeVoz.lang = 'es-ES';
+                window.speechSynthesis.speak(mensajeVoz);
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+        }
+
+        body {
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(26, 0, 0, 0.5)),
+                        url('imagenes/img1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03) 1px, transparent 1px) 0 0 / 20px 20px,
+                linear-gradient(0deg, rgba(255, 0, 0, 0.03) 1px, transparent 1px) 0 0 / 20px 20px;
+            animation: matrizFondo 15s linear infinite;
+        }
+
+        @keyframes matrizFondo {
+            0% {
+                transform: perspective(500px) rotateX(0deg) translateY(0);
+            }
+            100% {
+                transform: perspective(500px) rotateX(0deg) translateY(20px);
+            }
+        }
+
+        .contenedor-login {
+            background: rgba(0, 0, 0, 0.85);
+            border: 2px solid #ff0000;
+            border-radius: 15px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 0, 0.3),
+                0 0 40px rgba(255, 0, 0, 0.1),
+                inset 0 0 15px rgba(255, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .titulo {
+            color: #ff0000;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 
+                0 0 10px rgba(255, 0, 0, 0.5),
+                0 0 20px rgba(255, 0, 0, 0.3),
+                0 0 30px rgba(255, 0, 0, 0.1);
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .titulo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 0, 0, 0.8), 
+                transparent);
+        }
+
+        .grupo-entrada {
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entrada {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            background-color: rgba(17, 17, 17, 0.9);
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.1);
+        }
+
+        .entrada:focus {
+            box-shadow: 
+                0 0 15px rgba(255, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 0, 0, 0.2);
+            border-color: #ff3333;
+        }
+
+        .icono {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff0000;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
+        .boton-acceso {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .boton-acceso::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .boton-acceso:hover {
+            background: linear-gradient(45deg, #cc0000, #ff0000);
+            box-shadow: 
+                0 0 20px rgba(255, 0, 0, 0.5),
+                0 0 40px rgba(255, 0, 0, 0.3);
+        }
+
+        .boton-acceso:hover::before {
+            left: 100%;
+        }
+
+        @media (max-width: 480px) {
+            .contenedor-login {
+                width: 95%;
+                padding: 2rem;
+            }
+
+            .titulo {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Estilos para la animación de carga */
+        .pantalla-carga {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .mensaje-carga {
+            color: #ff0000;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .candado {
+            font-size: 4rem;
+            color: #ff0000;
+            animation: brilloCandado 2s infinite;
+        }
+
+        @keyframes brilloCandado {
+            0% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+            100% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+        }
+
+        .terminal {
+            font-family: 'Share Tech Mono', monospace;
+            color: #ff0000;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ff0000;
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .cursor {
+            animation: parpadeo 1s infinite;
+        }
+
+        @keyframes parpadeo {
+            50% { opacity: 0; }
+        }
+
+        .mensaje-error {
+            color: #ff0000;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            display: none;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor-login">
+        <h1 class="titulo">Acceso al Sistema</h1>
+        <form id="formularioLogin" onsubmit="return validarLogin(event)">
+            <div class="grupo-entrada">
+                <i class="fas fa-user icono"></i>
+                <input type="text" class="entrada" id="usuario" placeholder="Usuario" required>
+            </div>
+            <div class="grupo-entrada">
+                <i class="fas fa-lock icono"></i>
+                <input type="password" class="entrada" id="contrasena" placeholder="Contraseña" required>
+            </div>
+            <p class="mensaje-error" id="mensajeError">Usuario o contraseña incorrectos</p>
+            <button type="submit" class="boton-acceso">Iniciar Sesión</button>
+        </form>
+    </div>
+
+    <div class="pantalla-carga" id="pantallaCarga">
+        <i class="fas fa-lock candado" id="iconoCandado"></i>
+        <div class="terminal" id="terminal"></div>
+        <div class="mensaje-carga" id="mensajeCarga">Iniciando sesión...</div>
+    </div>
+
+    <script>
+    async function validarLogin(event) {
+        event.preventDefault();
+        
+        const usuario = document.getElementById('usuario').value;
+        const contrasena = document.getElementById('contrasena').value;
+        const pantallaCarga = document.getElementById('pantallaCarga');
+        const terminal = document.getElementById('terminal');
+        const iconoCandado = document.getElementById('iconoCandado');
+        const mensajeError = document.getElementById('mensajeError');
+
+        try {
+            const response = await fetch('./data/usuarios.json');
+            const data = await response.json();
+            
+            const usuarioValido = data.usuarios.find(u => 
+                u.usuario === usuario && u.contrasena === contrasena
+            );
+
+            if (usuarioValido) {
+                mensajeError.style.display = 'none';
+                pantallaCarga.style.display = 'flex';
+                
+                // Mensaje de voz de bienvenida
+                const mensajeVoz = new SpeechSynthesisUtterance();
+                mensajeVoz.text = `Bienvenido al sistema`;
+                mensajeVoz.lang = 'es-ES';
+                mensajeVoz.volume = 1;
+                mensajeVoz.pitch = 1;
+                mensajeVoz.rate = 0.9;
+                
+                // Simulación de terminal
+                const mensajes = [
+                    "Iniciando proceso de autenticación...",
+                    "Verificando credenciales...",
+                    "Acceso concedido para usuario: " + usuario,
+                    "Cargando interfaz del sistema...",
+                    "¡Bienvenido al sistema, " + usuario + "!"
+                ];
+
+                for (let i = 0; i < mensajes.length; i++) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    terminal.innerHTML += mensajes[i] + "<br>";
+                    terminal.scrollTop = terminal.scrollHeight;
+                }
+
+                // Reproducir mensaje de voz
+                window.speechSynthesis.speak(mensajeVoz);
+
+                // Cambiar el icono del candado a desbloqueado
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                iconoCandado.classList.remove('fa-lock');
+                iconoCandado.classList.add('fa-lock-open');
+
+                // Cambiar la redirección después del login exitoso
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                window.location.href = 'secciones/home.html?usuario=' + encodeURIComponent(usuario);
+            } else {
+                mensajeError.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            mensajeError.textContent = 'Error al conectar con el servidor';
+            mensajeError.style.display = 'block';
+        }
+
+        return false;
+    }
+    </script>
+</body>
+</html>
