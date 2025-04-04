@@ -144,14 +144,15 @@
         }
 
         .cabecera {
-            background: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(26, 0, 0, 0.9));
             padding: 1rem;
             border-bottom: 2px solid #ff0000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+            animation: neonPulse 2s infinite;
         }
 
         .semanas-grid {
@@ -164,20 +165,152 @@
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid #ff0000;
             border-radius: 10px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .semana:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
 
         .semana-titulo {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #ff0000;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, rgba(26, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .semana-titulo:hover {
+            background: linear-gradient(90deg, rgba(40, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+        }
+
+        .semana-contenido {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .semana.activa .semana-contenido {
+            max-height: 2000px;
+            padding: 1rem;
+        }
+
+        .lista-clases {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .clase-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #ff0000;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clase-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+
+        .clase-card.activa {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: #ff0000;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+        }
+
+        .clase-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .clase-titulo {
+            font-size: 1.1rem;
+            color: #ff0000;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+        }
+
+        .clase-fecha {
+            font-size: 0.9rem;
+            color: #ff6666;
+        }
+
+        .contenido-seleccionado {
+            display: none;
+            margin-top: 2rem;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .contenido-seleccionado.visible {
+            display: grid;
+        }
+
+        .video-contenedor {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* Ratio 16:9 */
+        }
+
+        .video-contenedor iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .material-seccion {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            border: 2px solid #ff0000;
+            height: fit-content;
+        }
+
+        .material-titulo {
+            color: #ff0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .material-enlace {
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            background: transparent;
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        .material-enlace:hover {
+            background: #ff0000;
+            color: #000;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+            transform: translateY(-2px);
         }
 
         .grabacion {
@@ -211,7 +344,7 @@
             margin-top: 0.5rem;
         }
 
-        .grabacion-enlace, .material-enlace {
+        .grabacion-enlace {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -224,11 +357,7 @@
             font-size: 0.9rem;
         }
 
-        .material-enlace {
-            background: rgba(255, 0, 0, 0.1);
-        }
-
-        .grabacion-enlace:hover, .material-enlace:hover {
+        .grabacion-enlace:hover {
             background: #ff0000;
             color: #000;
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
@@ -366,6 +495,38 @@
             z-index: 999;
         }
 
+        .material-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 2rem;
+            z-index: 1000;
+            width: 80%;
+            height: 80%;
+            display: none;
+        }
+
+        .material-iframe {
+            width: 100%;
+            height: calc(100% - 40px);
+            border: none;
+        }
+
+        .cerrar-material {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #ff0000;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
         @keyframes aparecer {
             from {
                 opacity: 0;
@@ -375,6 +536,298 @@
                 opacity: 1;
                 transform: translate(-50%, -50%);
             }
+        }
+
+        @keyframes neonPulse {
+            0% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(255, 0, 0, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.3); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .panel-principal {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+            padding: 0 1rem;
+        }
+
+        .lista-semanas {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .contenido-reproduccion {
+            flex: 2;
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            display: none;
+        }
+
+        .contenido-reproduccion.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .semana {
+            margin-bottom: 2rem;
+        }
+
+        .clase-card {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clase-card:last-child {
+            border-bottom: none;
+        }
+
+        .clase-card:hover {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        .clase-card.activa {
+            background: rgba(255, 0, 0, 0.2);
+            border-left: 4px solid #ff0000;
+        }
+
+        .clase-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .clase-titulo {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .clase-fecha {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .material-seccion {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+        }
+
+        .material-titulo {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .material-enlace {
+            display: inline-flex;
+            width: 100%;
+            padding: 1.2rem;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            background: transparent;
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .material-enlace:hover {
+            background: #ff0000;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 1024px) {
+            .panel-principal {
+                flex-direction: column-reverse;
+                gap: 2rem;
+                padding: 0 0.5rem;
+            }
+
+            .contenido-reproduccion {
+                position: relative;
+                top: 0;
+                width: 100%;
+                margin-top: 1rem;
+                display: block;
+            }
+
+            .video-contenedor {
+                margin-bottom: 1rem;
+                border-radius: 8px;
+                overflow: hidden;
+                border: 2px solid #ff0000;
+            }
+
+            .lista-semanas {
+                max-width: 100%;
+                margin-top: 2rem;
+            }
+
+            .cabecera {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: rgba(0, 0, 0, 0.95);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contenedor {
+                padding: 1rem 0.5rem;
+            }
+
+            .semana-titulo {
+                padding: 1rem;
+            }
+
+            .clase-card {
+                padding: 1rem;
+            }
+
+            .material-seccion {
+                padding: 1.5rem;
+            }
+
+            .material-enlace {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .video-contenedor {
+                border-radius: 5px;
+            }
+
+            .alerta-modal {
+                width: 90%;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .titulo-bienvenida {
+                font-size: 1.5rem;
+            }
+
+            .usuario-nombre {
+                font-size: 1rem;
+            }
+
+            .cerrar-sesion {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .clase-titulo {
+                font-size: 1rem;
+            }
+
+            .clase-fecha {
+                font-size: 0.8rem;
+            }
+
+            .material-titulo {
+                font-size: 1.1rem;
+            }
+
+            .semana-titulo h2 {
+                font-size: 1.2rem;
+            }
+
+            .alerta-mensaje {
+                font-size: 0.9rem;
+            }
+
+            .alerta-boton {
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .contenido-reproduccion {
+                margin-top: 0.5rem;
+            }
+
+            .video-contenedor {
+                border-width: 1px;
+            }
+
+            .material-seccion {
+                margin-top: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Mejoras para la orientación landscape en móviles */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .panel-principal {
+                flex-direction: row;
+            }
+
+            .lista-semanas {
+                max-height: 80vh;
+                overflow-y: auto;
+                max-width: 40%;
+            }
+
+            .contenido-reproduccion {
+                max-width: 60%;
+            }
+
+            .cabecera {
+                flex-direction: row;
+                padding: 0.5rem;
+            }
+
+            .usuario-info {
+                flex-direction: row;
+            }
+        }
+
+        /* Mejoras para la experiencia táctil */
+        @media (hover: none) {
+            .clase-card:hover {
+                transform: none;
+            }
+
+            .material-enlace:hover {
+                transform: none;
+            }
+
+            .clase-card:active,
+            .material-enlace:active {
+                background: rgba(255, 0, 0, 0.2);
+                transform: scale(0.98);
+            }
+        }
+
+        /* Scrollbar personalizado para móviles */
+        .lista-semanas::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .lista-semanas::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .lista-semanas::-webkit-scrollbar-thumb {
+            background: #ff0000;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -390,8 +843,27 @@
     </header>
 
     <div class="contenedor">
-        <div class="semanas-grid" id="semanasContainer">
-            <!-- El contenido se cargará dinámicamente -->
+        <div class="panel-principal">
+            <div class="lista-semanas" id="semanasContainer">
+                <!-- El contenido se cargará dinámicamente -->
+            </div>
+            <div class="contenido-reproduccion" id="contenidoReproduccion">
+                <div class="video-contenedor">
+                    <iframe id="videoActual" 
+                            src="https://www.youtube.com/embed/-bFATR4SKPo?si=MpQDKCKQYOkR5OdC" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="material-seccion">
+                    <h3 class="material-titulo">Material de Clase</h3>
+                    <a href="#" class="material-enlace" id="materialActual">
+                        <i class="fas fa-book"></i>
+                        Ver Material
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -410,6 +882,11 @@
             <button class="alerta-boton" onclick="confirmarAcceso()">Continuar</button>
             <button class="alerta-boton" onclick="cancelarAcceso()">Cancelar</button>
         </div>
+    </div>
+
+    <div class="material-modal" id="materialModal">
+        <button class="cerrar-material" onclick="cerrarMaterial()">×</button>
+        <iframe id="materialIframe" class="material-iframe"></iframe>
     </div>
 
     <script>
@@ -456,25 +933,20 @@
                     const semanaElement = document.createElement('div');
                     semanaElement.className = 'semana';
                     semanaElement.innerHTML = `
-                        <h2 class="semana-titulo">Semana ${semana.numero}</h2>
-                        ${semana.grabaciones.map((grab, i) => `
-                            <div class="grabacion">
-                                <div class="grabacion-titulo">
-                                    <span>${grab.titulo}</span>
-                                    <span class="grabacion-dia">${grab.dia}</span>
+                        <div class="semana-titulo" onclick="toggleSemana(this)">
+                            <h2>Semana ${semana.numero}</h2>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="semana-contenido">
+                            ${semana.grabaciones.map((grab, i) => `
+                                <div class="clase-card" onclick="seleccionarClase(this, '${grab.link}', '${materiales.semanas[index].materiales[i].link}')">
+                                    <div class="clase-info">
+                                        <div class="clase-titulo">${grab.titulo}</div>
+                                        <div class="clase-fecha">${grab.dia}</div>
+                                    </div>
                                 </div>
-                                <div class="grabacion-acciones">
-                                    <a href="#" class="grabacion-enlace" onclick="abrirVideo('${grab.link}')">
-                                        <i class="fas fa-play"></i> Ver Grabación
-                                    </a>
-                                    <a href="#" 
-                                       class="material-enlace" 
-                                       onclick="abrirMaterial('${materiales.semanas[index].materiales[i].link}', '${usuario}')">
-                                        <i class="fas fa-book"></i> Material
-                                    </a>
-                                </div>
-                            </div>
-                        `).join('')}
+                            `).join('')}
+                        </div>
                     `;
                     container.appendChild(semanaElement);
                 });
@@ -483,11 +955,38 @@
             }
         }
 
-        function abrirVideo(link) {
-            const modal = document.getElementById('videoModal');
-            const container = document.getElementById('videoContainer');
-            container.innerHTML = `<iframe src="${link}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`;
-            modal.style.display = 'flex';
+        function toggleSemana(elemento) {
+            const semana = elemento.parentElement;
+            const estaActiva = semana.classList.contains('activa');
+            
+            document.querySelectorAll('.semana').forEach(s => s.classList.remove('activa'));
+            
+            if (!estaActiva) {
+                semana.classList.add('activa');
+            }
+        }
+
+        function seleccionarClase(elemento, videoLink, materialLink) {
+            document.querySelectorAll('.clase-card').forEach(card => 
+                card.classList.remove('activa'));
+            
+            elemento.classList.add('activa');
+            
+            const videoFrame = document.getElementById('videoActual');
+            const materialEnlace = document.getElementById('materialActual');
+            
+            videoFrame.src = videoLink;
+            
+            // En móviles, hacer scroll al video
+            if (window.innerWidth <= 1024) {
+                const contenidoReproduccion = document.getElementById('contenidoReproduccion');
+                contenidoReproduccion.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            materialEnlace.onclick = (e) => {
+                e.preventDefault();
+                abrirMaterial(materialLink, document.getElementById('nombreUsuario').textContent);
+            };
         }
 
         function cerrarVideo() {
@@ -497,6 +996,12 @@
             modal.style.display = 'none';
         }
 
+        function cerrarMaterial() {
+            document.getElementById('materialModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('materialIframe').src = '';
+        }
+
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
             const usuario = params.get('usuario');
@@ -504,7 +1009,7 @@
                 document.getElementById('nombreUsuario').textContent = usuario;
                 
                 const mensajeVoz = new SpeechSynthesisUtterance();
-                mensajeVoz.text = `Bienvenido al panel de control, acontinuacion podras encontrar las grabaciones del curso y material de estudio.`;
+                mensajeVoz.text = `Bienvenido al panel de control, a continuación podrás encontrar las grabaciones del curso y material de estudio.`;
                 mensajeVoz.lang = 'es-ES';
                 mensajeVoz.volume = 1;
                 mensajeVoz.pitch = 1;
@@ -512,6 +1017,10 @@
                 
                 window.speechSynthesis.speak(mensajeVoz);
             }
+
+            // Mostrar el contenedor de reproducción al inicio
+            document.getElementById('contenidoReproduccion').style.display = 'block';
+            
             cargarGrabaciones();
         }
 
@@ -525,6 +1034,63 @@
                 window.location.href = '../index.html';
             }, 1500);
         }
+
+        document.getElementById('materialActual').addEventListener('click', function(e) {
+            e.preventDefault();
+            const link = this.dataset.link;
+            if (link) {
+                abrirMaterial(link, document.getElementById('nombreUsuario').textContent);
+            }
+        });
+
+        // Añadir soporte para gestos táctiles
+        document.addEventListener('DOMContentLoaded', function() {
+            let touchstartX = 0;
+            let touchendX = 0;
+
+            document.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            });
+
+            document.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleGesture();
+            });
+
+            function handleGesture() {
+                if (touchendX < touchstartX && touchstartX - touchendX > 100) {
+                    // Deslizar a la izquierda - mostrar contenido
+                    document.getElementById('contenidoReproduccion').classList.add('visible');
+                }
+                if (touchendX > touchstartX && touchendX - touchstartX > 100) {
+                    // Deslizar a la derecha - ocultar contenido en móvil
+                    if (window.innerWidth <= 1024) {
+                        document.getElementById('contenidoReproduccion').classList.remove('visible');
+                    }
+                }
+            }
+        });
+
+        // Asegurar que el contenido de reproducción esté visible en móviles desde el inicio
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 1024) {
+                const contenidoReproduccion = document.getElementById('contenidoReproduccion');
+                contenidoReproduccion.style.display = 'block';
+            }
+        });
+
+        // Ajustar la visibilidad al cambiar el tamaño de la ventana
+        window.addEventListener('resize', function() {
+            const contenidoReproduccion = document.getElementById('contenidoReproduccion');
+            if (window.innerWidth <= 1024) {
+                contenidoReproduccion.style.display = 'block';
+            } else {
+                // En desktop mantener el comportamiento original
+                if (!document.querySelector('.clase-card.activa')) {
+                    contenidoReproduccion.style.display = 'none';
+                }
+            }
+        });
     </script>
 </body>
 </html>
